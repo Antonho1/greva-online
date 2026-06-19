@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calendar Greve - Greva Online</title>
+    <link rel="stylesheet" href="/css/reset.css?v=42">
+    <link rel="stylesheet" href="/css/pages.css?v=42">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+</head>
+<body class="page">
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Calendar Greve</h1>
+            <a href="/" class="back-btn">← Înapoi</a>
+        </div>
+
+        <div class="card">
+            <p>Lista grevelor anunțate și active din România. Dacă pregătești sau participi la o grevă neînregistrată aici, <a href="/inscriere" style="color:#ffc800">înscrie-o</a>.</p>
+        </div>
+
+        <div id="greve-list">
+            <p style="text-align:center; opacity:0.6;">Se încarcă...</p>
+        </div>
+    </div>
+
+    <script>
+        // Încarcă datele despre greve din JSON
+        fetch('/data/greve.json?t=' + Date.now())
+            .then(r => r.json())
+            .then(data => {
+                const list = document.getElementById('greve-list');
+
+                if (!data.greve || data.greve.length === 0) {
+                    list.innerHTML = '<div class="card"><p style="text-align:center">Nu există greve anunțate momentan.</p></div>';
+                    return;
+                }
+
+                // Sortează după dată (descrescător)
+// Calculează status automat cu precizie pe ore + sortează inteligent
+                const now = new Date();
+
+                data.greve.forEach(g => {
+                    // Construim datetime pentru start: data + ora_start (sau 00:00)
+                    const startDateTime = new Date(g.data_start + 'T' + (g.ora_start || '00:00') + ':00');
+
+                    // Construim datetime pentru end: data_end + ora_end (sau 23:59)
+                    const endDate = g.data_end || g.data_start;
+                    const endTime = g.ora_end || '23:59';
+                    const endDateTime = new Date(endDate + 'T' + endTime + ':59');
+
+                    // Calculează status automat (poate fi suprascris cu status_override)
+                    if (g.status_override) {
+                        g.computed_status = g.status_override;
+                    } else if (now >= startDateTime && now <= endDateTime) {
+                        g.computed_status = 'activa';
+                    } else if (startDateTime > now) {
+                        g.computed_status = 'anuntata';
+                    } else {
+                        g.computed_status = 'incheiata';
+                    }
+
+                    // Pentru sortare și afișare
+                    g._startDateTime = startDateTime;
+                });
+
+                // Sortare inteligentă: ACTIVE → URMĂTOARE → ÎNCHEIATE (recente)
+                const order = { 'activa': 0, 'anuntata': 1, 'castigata': 2, 'compromis': 2, 'pierduta': 2, 'incheiata': 2 };
+                data.greve.sort((a, b) => {
+                    const orderA = order[a.computed_status] ?? 4;
+                    const orderB = order[b.computed_status] ?? 4;
+                    if (orderA !== orderB) return orderA - orderB;
+
+                    // În cadrul aceleiași categorii:
+                    // active/anunțate: cea mai apropiată PRIMA
+                    // încheiate: cea mai recentă PRIMA
+                    if (['incheiata', 'castigata', 'pierduta', 'compromis'].includes(a.computed_status)) {
+                        return b._startDateTime - a._startDateTime;
+                    }
+                    return a._startDateTime - b._startDateTime;
+                });
+
+                function formatOra(g) {
+                            // Suport pentru ambele formate: vechi (ora) și nou (ora_start + ora_end)
+                            if (g.ora_start && g.ora_end) {
+                                return escape(g.ora_start + ' - ' + g.ora_end);
+                            }
+                            if (g.ora_start) return escape(g.ora_start);
+                            return escape(g.ora || '');
+                        }
+
+                function renderStatusBadge(status) {
+                            const map = {
+                                'activa': { text: 'În desfășurare', color: '#ff4d4d' },
+                                'anuntata': { text: 'Urmează', color: '#ffc800' },
+                                'incheiata': { text: 'Încheiată', color: '#6a8aa3' },
+                                'castigata': { text: '✅ Câștigată', color: '#4caf50' },
+                                'compromis': { text: '🤝 Compromis', color: '#7986cb' },
+                                'pierduta': { text: '❌ Neîndeplinită', color: '#9e9e9e' }
+                            };
+                            const s = map[status] || map.incheiata;
+                            return `<span class="greva-status-badge" style="background:${s.color}">${s.text}</span>`;
+                        }
+                    
+                        function renderNewsLinks(news) {
+                            if (!news || !Array.isArray(news) || news.length === 0) return '';
+                        
+                            const items = news.map(n => {
+                                if (typeof n === 'string') {
+                                    return `<li><a href="${escape(n)}" target="_blank" rel="noopener">${escape(n)}</a></li>`;
+                                }
+                                const source = n.sursa ? `<span class="news-source">${escape(n.sursa)}</span> · ` : '';
+                                const date = n.data ? `<span class="news-date">${escape(n.data)}</span>` : '';
+                                return `<li>${source}<a href="${escape(n.url)}" target="_blank" rel="noopener">${escape(n.titlu || n.url)}</a> ${date}</li>`;
+                            }).join('');
+                        
+                            return `<div class="greva-news">
+                                <strong>📰 În presă:</strong>
+                                <ul>${items}</ul>
+                            </div>`;
+                        }
+
+                                // Construim HTML cu separator între "în curs/urmează" și "trecute"
+                let htmlParts = [];
+                let lastWasPast = false;
+                let separatorAdded = false;
+
+                data.greve.forEach(g => {
+                    const isPast = ['incheiata', 'castigata', 'pierduta', 'compromis'].includes(g.computed_status);
+
+                    // Adaugă separatorul când trecem de la activ/urmează la trecute
+                    if (isPast && !separatorAdded) {
+                        htmlParts.push('<div class="greve-separator"><span>Greve încheiate</span></div>');
+                        separatorAdded = true;
+                    }
+
+                    const dataFormat = formatDate(g.data_start, g.data_end);
+                    const statusBadge = renderStatusBadge(g.computed_status);
+                    const newsLinks = renderNewsLinks(g.news);
+
+                    htmlParts.push(`
+                        <div class="greva-card status-${g.computed_status}">
+                            <div class="greva-header">
+                                <span class="greva-data">${dataFormat}</span>
+                                ${(g.ora_start || g.ora) ? `<span class="greva-ora">${formatOra(g)}</span>` : ''}
+                                ${statusBadge}
+                            </div>
+                            <h3>${formatTip(g.tip || 'greva')} la ${escape(g.companie)}</h3>
+                            <div class="greva-meta">
+                                📍 ${escape(g.locatie)} · 🏢 ${escape(g.sector)}
+                            </div>
+                            <p>${escape(g.motiv)}</p>
+                            ${g.organizator ? `<p class="greva-org">Organizator: ${escape(g.organizator)}</p>` : ''}
+                            ${g.site ? `<p class="greva-link"><a href="${escape(g.site)}" target="_blank" rel="noopener">Site dedicat →</a></p>` : ''}
+                            ${newsLinks}
+                            ${g.rezultat ? `<div class="greva-rezultat">${escape(g.rezultat)}</div>` : ''}
+                        </div>
+                    `);
+                });
+
+                list.innerHTML = htmlParts.join('');
+            })
+            .catch(err => {
+                document.getElementById('greve-list').innerHTML =
+                    '<div class="alert alert-error">Eroare la încărcare. Încearcă din nou.</div>';
+            });
+
+        function formatTip(tip) {
+            const map = {
+                'greva': '🚫 Grevă',
+                'pichetare': '✊ Pichetare',
+                'protest': '📢 Protest'
+            };
+            return map[tip] || '✊ Acțiune';
+        }
+
+
+        function formatDate(start, end) {
+            const d1 = new Date(start);
+            const months = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+            const s = `${d1.getDate()} ${months[d1.getMonth()]} ${d1.getFullYear()}`;
+            if (end && end !== start) {
+                const d2 = new Date(end);
+                return `${s} – ${d2.getDate()} ${months[d2.getMonth()]}`;
+            }
+            return s;
+        }
+
+        function escape(s) {
+            return (s || '').toString()
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

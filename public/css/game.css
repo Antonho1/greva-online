@@ -1,0 +1,417 @@
+/*
+ * game.css — Harta, rățuștele, HUD-ul, chat-ul.
+ *
+ * Decizii de performanță:
+ * - Rățuștele sunt <div> cu background-image (NU <img>) ca să refolosim
+ *   același bitmap din cache.
+ * - Folosim transform: translate(x, y) în loc de top/left → GPU compositing.
+ * - will-change pentru elementele animate.
+ */
+
+#scene-game {
+    background: #0a1a2a;
+}
+
+/* === HARTA === */
+
+.map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/map/iceberg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.ducks-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /*
+     * Coordonatele serverului sunt 0–10000. Le scalăm aici la viewport
+     * setând .ducks-layer cu un "sistem de coordonate logic".
+     * Rățuștele își setează position prin transform: translate(x%, y%).
+     */
+}
+
+/* === RĂȚUȘCA === */
+
+.duck {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    /*
+     * Originea: jos-centru (pentru că vrem ca poziția să reprezinte
+     * "unde stă rățușca pe gheață", nu colțul sprite-ului).
+     */
+    transform-origin: center bottom;
+
+    /*
+     * Trick: poziționăm cu left/top în % (relativ la .ducks-layer)
+     * și aplicăm translate negativ ca să centrăm rățușca pe punct.
+     * Apoi animația de bobbing se compune fără să strice poziția.
+     */
+}
+
+.duck-body {
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/ducks/duck.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    animation: duck-bob 1.8s ease-in-out infinite;
+    animation-delay: var(--bob-delay, 0s);  /* moștenit de la .duck */
+}
+.duck-sign {
+    position: absolute;
+    bottom: 55%;
+    left: 60%;
+    transform-origin: 15% 100%;
+    width: 70px;
+    height: 55px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    animation: sign-wave 1.8s ease-in-out infinite;
+    animation-delay: var(--bob-delay, 0s);  /* ACELAȘI delay ca rățușca */
+}
+/* Rățușca proprie evidențiată discret */
+.duck.is-me .duck-body {
+    filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.7));
+}
+
+/* === BULA DE CHAT === */
+
+.chat-bubble {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: #fff;
+    color: #0a1a2a;
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.3;
+    max-width: 220px;
+    min-width: 60px;
+    text-align: center;
+    word-wrap: break-word;
+    white-space: normal;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    pointer-events: none;
+    /* z-index foarte mare ca să fie ÎNTOTDEAUNA deasupra tuturor rățuștelor */
+    z-index: 1000;
+    /* will-change forțează propriul layer de compositing GPU */
+    will-change: transform, opacity;
+    animation: bubble-life 7s ease-out forwards;
+}
+
+.chat-bubble--floating {
+    /* Bulă în layer separat - poziționată la coordonatele rățuștei */
+    position: absolute;
+    /* Reset position - folosim left/top setate prin JS */
+    bottom: auto;
+    /* Offset deasupra rățuștei: -100% pentru rățușcă + spațiu */
+    transform: translate(-50%, -180%);
+    /* z-index uriaș */
+    z-index: 5000;
+}
+
+.chat-bubble::after {
+    /* Coada bulei (triunghi mic în jos) */
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #fff;
+}
+
+/* === HUD === */
+
+.hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Doar elementele specifice ale HUD-ului primesc pointer-events: auto */
+    z-index: 100;
+}
+
+.hud-top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 5000;
+    pointer-events: auto;
+}
+
+.counter {
+    background: rgba(10, 26, 42, 0.85);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.counter-icon {
+    font-size: 16px;
+}
+.counter-label {
+    opacity: 0.7;
+    font-weight: 400;
+}
+
+.connection-status {
+    margin-left: auto;
+    background: rgba(10, 26, 42, 0.85);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4caf50;
+    box-shadow: 0 0 6px #4caf50;
+}
+.connection-status.disconnected .status-dot {
+    background: #f44336;
+    box-shadow: 0 0 6px #f44336;
+}
+
+/* === CHAT INPUT === */
+
+.chat-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* Padding normal + safe area pentru iPhone cu notch/bara jos */
+    padding: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    pointer-events: auto;
+    background: linear-gradient(to top, rgba(10,26,42,0.95), rgba(10,26,42,0));
+    /* Asigură că e deasupra a tot */
+    z-index: 5000;
+}
+
+.chat-container.hidden {
+    display: none;
+}
+
+.chat-cooldown {
+    text-align: center;
+    font-size: 12px;
+    color: #ffc800;
+    margin-bottom: 6px;
+}
+
+.chat-form {
+    display: flex;
+    gap: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.chat-input {
+    flex: 1;
+    background: rgba(255,255,255,0.95);
+    color: #0a1a2a;
+    padding: 12px 16px;
+    border-radius: 999px;
+    font-size: 15px;
+}
+.chat-input:focus {
+    background: #fff;
+}
+
+.chat-send {
+    background: #ffc800;
+    color: #0a1a2a;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.15s, transform 0.15s;
+}
+.chat-send:hover:not(:disabled) {
+    background: #ffd83a;
+}
+.chat-send:active {
+    transform: scale(0.96);
+}
+
+/* === MODAL === */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal[hidden] {
+    display: none;
+}
+.modal-content {
+    background: #1a4d7a;
+    padding: 28px;
+    border-radius: 16px;
+    max-width: 400px;
+    text-align: center;
+}
+.modal-content h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+.modal-content p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #d0e0ee;
+}
+
+/* === Buton "Înapoi" în HUD-ul de sus === */
+.exit-btn {
+    background: rgba(10, 26, 42, 0.85);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    margin-right: 8px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.exit-btn:hover {
+    background: rgba(255, 200, 0, 0.9);
+    color: #0a1a2a;
+    border-color: #ffc800;
+}
+
+.exit-btn:active {
+    transform: translateY(1px);
+}
+
+/* === Banner cu numele acțiunii curente (sus pe hartă) === */
+.action-banner {
+    position: absolute;
+    top: 65px;  /* sub HUD-top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4900;  /* sub hud-top dar peste ducks-layer */
+
+    background: rgba(255, 200, 0, 0.95);
+    color: #0a1a2a;
+    padding: 8px 20px;
+    border-radius: 999px;
+
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    max-width: calc(100vw - 40px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* Animație subtilă de pulsing ca să atragă atenția */
+    animation: action-banner-pulse 3s ease-in-out infinite;
+}
+
+@keyframes action-banner-pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.03); }
+}
+
+.action-banner-icon {
+    font-size: 18px;
+}
+
+/* Pe mobile - mai compact */
+@media (max-width: 600px) {
+    .action-banner {
+        font-size: 13px;
+        padding: 6px 14px;
+        top: 60px;
+    }
+
+    .action-banner-icon {
+        font-size: 16px;
+    }
+}
+
+/* Pe ecrane foarte mici - chiar mai mic */
+@media (max-width: 380px) {
+    .action-banner {
+        font-size: 11px;
+        padding: 5px 12px;
+        max-width: calc(100vw - 24px);
+    }
+}
+
+/* Pe mobile - mai compact */
+@media (max-width: 600px) {
+    .exit-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .duck {
+        width: 48px;
+        height: 48px;
+    }
+    .duck-sign {
+        width: 60px;
+        height: 45px;
+    }
+    .chat-bubble {
+        font-size: 12px;
+        max-width: 180px;
+    }
+}
+

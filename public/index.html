@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">    <meta name="description" content="Pichetare BRD - protest pașnic digital. Solidaritate pentru angajații Bancii.">
+    <meta name="theme-color" content="#1a4d7a">
+
+    <meta name="description" content="Greva Online - platformă digitală de protest pașnic. Solidaritate cu angajații.">
+
+    <!-- Open Graph (Facebook, WhatsApp, Discord, Slack) -->
+    <meta property="og:title" content="Greva Online">
+    <meta property="og:description" content="Platformă digitală de protest pașnic. Solidaritate cu angajații din toate sectoarele.">
+    <meta property="og:image" content="https://greva.online/assets/icon-192.png">
+    <meta property="og:url" content="https://greva.online">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ro_RO">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Greva Online">
+    <meta name="twitter:description" content="Platformă digitală de protest pașnic.">
+    <meta name="twitter:image" content="https://greva.online/assets/icon-192.png">
+
+    <!-- Pentru indexare Google -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="keywords" content="grevă, pichetare, protest, sindicat, drepturi muncă, România, BRD, angajați">
+    <meta name="author" content="Greva Online">
+
+    <!-- Verificare canonical URL -->
+    <link rel="canonical" href="https://greva.online">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/icon-192.png">
+    <title>Greva Online - Protest pașnic digital</title>
+
+    <!-- Preload assets critice ca să încarce în paralel cu HTML-ul -->
+    <link rel="preload" href="/assets/map/iceberg.webp" as="image">
+    <link rel="preload" href="/assets/ducks/duck.webp" as="image">
+
+    <!-- CSS-uri concatenate logic (Caddy va servi gzipped) -->
+<link rel="stylesheet" href="/css/reset.css?v=42">
+<link rel="stylesheet" href="/css/welcome.css?v=42">
+<link rel="stylesheet" href="/css/signs.css?v=42">
+<link rel="stylesheet" href="/css/game.css?v=42">
+<link rel="stylesheet" href="/css/animations.css?v=42">
+<body>
+
+    <!--
+        Trei "scene" în același DOM, comutate prin clasa .active.
+        Mai eficient decât navigare între pagini: zero round-trip,
+        socket-ul se conectează doar la final.
+    -->
+
+    <!-- ============== SCENA 1: WELCOME ============== -->
+    <section id="scene-welcome" class="scene active">
+        <div class="welcome-container">
+
+            <h1 class="dynamic-title">Greva Online</h1>
+            <p class="subtitle">Protest pașnic digital — solidaritate cu angajații</p>
+
+            <div class="warning-box">
+                <span class="warning-icon">⚠️</span>
+                <p><strong>Nu folosi înjurături</strong>, acesta este un protest pașnic!</p>
+            </div>
+
+            <div class="terms">
+                <p>Prin participare ești de acord să respecți regulile:</p>
+                <ul>
+                    <li>Limbaj decent, fără jigniri sau amenințări</li>
+                    <li>Mesaje doar despre tema protestului</li>
+                    <li>Comportamentul abuziv duce la excludere</li>
+                </ul>
+            </div>
+
+            <h2 class="role-prompt">Cum vrei să participi?</h2>
+
+            <div class="role-buttons">
+                <button id="btn-visitor" class="role-btn role-btn--visitor">
+                    <span class="role-icon">👁️</span>
+                    <span class="role-title">Vizitator</span>
+                    <span class="role-desc">Privești protestul, fără avatar</span>
+                </button>
+
+                <button id="btn-protester" class="role-btn role-btn--protester">
+                    <span class="role-icon role-icon--img" style="background-image: url('/assets/ratasemn.webp');"></span>
+                    <span class="role-title">Protestatar</span>
+                    <span class="role-desc">Primești o rățușcă și o pancartă</span>
+                </button>
+            </div>
+
+                <div class="page-links">
+                <a href="/calendar">📅 Calendar greve</a>
+                <a href="/despre">ℹ️ Despre</a>
+                <a href="/inscriere">📝 Înscrie grevă</a>
+                <a href="/doneaza">💛 Donează</a>
+                <a href="/confidentialitate">🔒 Confidențialitate</a>
+                </div>
+            <p class="footer-note">greva.online · Suntem afiliați doar cu spiritul civic</p>
+        </div>
+    </section>
+
+
+    <!-- ============== SCENA 2: ALEGE PANCARTA ============== -->
+    <section id="scene-signs" class="scene">
+        <div class="signs-container">
+
+            <h2>Alege-ți pancarta</h2>
+            <p class="signs-subtitle">Cu ce mesaj vrei să stai la protest?</p>
+
+            <div id="signs-grid" class="signs-grid">
+                <!-- Populat dinamic din js/signs.js -->
+            </div>
+
+            <div class="signs-actions">
+                <button id="btn-signs-back" class="btn-secondary">← Înapoi</button>
+                <button id="btn-signs-confirm" class="btn-primary" disabled>
+                    Intră în protest →
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============== SCENA 3: JOC ============== -->
+    <section id="scene-game" class="scene">
+
+        <!-- Hartă: fundalul + container pentru rățuște -->
+        <div id="map" class="map">
+            <!-- Rățuștele sunt injectate dinamic aici -->
+            <div id="ducks-layer" class="ducks-layer"></div>
+        </div>
+
+        <!-- UI overlay: counter useri + chat input -->
+        <div class="hud">
+
+            <div class="hud-top">
+                <a href="/" id="btn-exit-game" class="exit-btn" title="Ieși din protest">
+                    ← Înapoi
+                </a>
+                <div class="counter">
+                    <span class="counter-icon">🦆</span>
+                    <span id="counter-protesters">0</span>
+                    <span class="counter-label">protestatari</span>
+                </div>
+                <div class="counter counter-visitors">
+                    <span class="counter-icon">👁️</span>
+                    <span id="counter-visitors">0</span>
+                    <span class="counter-label">vizitatori</span>
+                </div>
+                <div id="action-banner" class="action-banner" style="display:none">
+                    <span class="action-banner-icon">✊</span>
+                    <span class="action-banner-text">Acțiune</span>
+                </div>
+                <div id="connection-status" class="connection-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Conectat</span>
+            </div>
+
+            <!-- Input chat - ascuns pentru vizitatori -->
+            <div id="chat-container" class="chat-container">
+                <div id="chat-cooldown" class="chat-cooldown" hidden>
+                    Următorul mesaj în <span id="cooldown-timer">0</span>s
+                </div>
+                <form id="chat-form" class="chat-form" autocomplete="off">
+                    <input
+                        id="chat-input"
+                        class="chat-input"
+                        type="text"
+                        maxlength="140"
+                        placeholder="Scrie un mesaj pașnic..."
+                        autocomplete="off"
+                    >
+                    <button type="submit" class="chat-send">Trimite</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal pentru deconectări/erori -->
+        <div id="modal" class="modal" hidden>
+            <div class="modal-content">
+                <h3 id="modal-title">Deconectat</h3>
+                <p id="modal-message"></p>
+                <button id="modal-action" class="btn-primary">Reîncearcă</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============== SCRIPTS ============== -->
+    <!-- Socket.io client - servit local (NU de pe CDN, evităm dependențe externe) -->
+    <script src="/vendor/socket.io.min.js"></script>
+
+    <!-- Modulele aplicației, în ordinea corectă a dependențelor -->
+<script src="/js/config.js?v=42"></script>
+<script src="/js/active-action.js?v=42"></script>
+<script src="/js/welcome.js?v=42"></script>
+<script src="/js/signs.js?v=42"></script>
+<script src="/js/socket-client.js?v=42"></script>
+<script src="/js/game.js?v=42"></script>
+<script src="/js/chat.js?v=42"></script>
+<script src="/js/main.js?v=42"></script>
+</body>
+</html>

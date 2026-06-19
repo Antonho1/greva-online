@@ -1,0 +1,88 @@
+/*
+ * animations.css — Animațiile CSS pure, fără JavaScript.
+ *
+ * CRITIC pentru performanță: dacă 1000+ rățuște ar avea animații JS,
+ * serverul + clientul ar muri. CSS keyframes rulează 100% pe GPU,
+ * zero overhead per cadru. Putem avea 5000+ rățuște animate simultan.
+ */
+
+/* Bobbing-ul rățuștei — mișcare ușoară sus-jos + ușor squash */
+@keyframes duck-bob {
+    0%, 100% {
+        transform: translateY(0) scale(1, 1);
+    }
+    50% {
+        transform: translateY(-4px) scale(1.02, 0.98);
+    }
+}
+
+/* Bula de chat — viața completă în 7 secunde */
+@keyframes bubble-life {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0px) scale(0.6);
+    }
+    8% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-8px) scale(1.05);
+    }
+    12% {
+        transform: translateX(-50%) translateY(-8px) scale(1);
+    }
+    85% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-8px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-16px) scale(0.95);
+    }
+}
+
+/* Apariție rățușcă nouă (când se conectează un user nou) */
+@keyframes duck-spawn {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+.duck.spawning {
+    animation: duck-spawn 0.4s ease-out;
+}
+
+/* Fade-out la deconectare */
+@keyframes duck-despawn {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.6); }
+}
+.duck.despawning {
+    animation: duck-despawn 0.3s ease-in forwards;
+}
+
+/* Pancarta se leagănă ca și cum o ții în mână */
+@keyframes sign-wave {
+    0%, 100% {
+        transform: rotate(-8deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+}
+
+/* Respectă preferința utilizatorului pentru mai puține animații */
+@media (prefers-reduced-motion: reduce) {
+    .duck-body {
+        animation: none;
+    }
+    .duck-sign {
+        animation: none;
+    }
+    .chat-bubble {
+        animation-duration: 0.2s;
+        animation-delay: 6.8s;
+    }
+}

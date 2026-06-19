@@ -1,0 +1,44 @@
+# === SECRETE - NU urca niciodată ===
+server/secrets.js
+.env
+*.pem
+*.key
+certs/
+
+# === DATE PERSONALE (înscrieri cu emailuri/IP-uri) ===
+data/
+public/data/
+public/calendar-data/
+
+
+# === SCRIPTURI/NOTIȚE PERSONALE ===
+aproba.sh
+/aproba.sh
+cum rulezi
+golive.sh
+gooffline.sh
+
+# === LOG-URI ===
+*.log
+logs/
+npm-debug.log*
+
+# === DEPENDENȚE (se reinstalează din package.json) ===
+node_modules/
+
+# === FIȘIERE TEMPORARE ===
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# === FILTRU PRIVAT (dacă ai cuvinte custom) ===
+server/profanityFilter.private.js
+
+# === PM2 ===
+.pm2/
+ecosystem.config.js
+
+cum rulezi
+public/calendar-data/
+public/assets/signs/altele/

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Înscrie o grevă - Greva Online</title>
+    <link rel="stylesheet" href="/css/reset.css?v=42">
+    <link rel="stylesheet" href="/css/pages.css?v=42">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+</head>
+<body class="page">
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Înscrie o grevă</h1>
+            <a href="/" class="back-btn">← Înapoi</a>
+        </div>
+
+        <div class="card">
+            <p>Anunță o grevă pentru a apărea în calendarul greva.online. Verificăm manual înainte să publicăm, ca să evităm dezinformările.</p>
+        </div>
+
+        <form id="inscriere-form" class="card">
+            <div class="form-group">
+                <label for="companie">Companie / Instituție *</label>
+                <input type="text" id="companie" required maxlength="100" placeholder="ex: Guvernul Romaniei">
+            </div>
+
+            <div class="form-group">
+                <label for="tip">Tip acțiune *</label>
+                <select id="tip" required>
+                    <option value="">Alege tipul...</option>
+                    <option value="greva">Grevă (oprire completă a muncii)</option>
+                    <option value="pichetare">Pichetare (manifestare la sediul angajatorului)</option>
+                    <option value="protest">Protest (manifestare publică în stradă)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sector">Sector *</label>
+                <select id="sector" required>
+                    <option value="">Alege...</option>
+                    <option>Bancar / Financiar</option>
+                    <option>IT / Software</option>
+                    <option>Transport / Logistică</option>
+                    <option>Educație</option>
+                    <option>Sănătate</option>
+                    <option>Industrie / Producție</option>
+                    <option>Retail / Comerț</option>
+                    <option>Servicii publice</option>
+                    <option>Altul</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="data_start">Data început *</label>
+                <input type="date" id="data_start" required>
+            </div>
+
+            <div class="form-group">
+                <label for="data_end">Data sfârșit (dacă durează mai multe zile)</label>
+                <input type="date" id="data_end">
+            </div>
+
+            <div class="form-group">
+                <label for="ora_start">Ora început</label>
+                <input type="time" id="ora_start">
+            </div>
+
+            <div class="form-group">
+                <label for="ora_end">Ora sfârșit</label>
+                <input type="time" id="ora_end">
+            </div>
+
+            <div class="form-group">
+                <label for="locatie">Locație *</label>
+                <input type="text" id="locatie" required maxlength="150" placeholder="ex: București, Piata Constitutiei">
+            </div>
+
+            <div class="form-group">
+                <label for="motiv">Motivul grevei *</label>
+                <textarea id="motiv" required maxlength="500" placeholder="Pe scurt, ce cereri au protestatarii"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="organizator">Organizator (sindicat, asociație) *</label>
+                <input type="text" id="organizator" maxlength="100" placeholder="ex: Sindicatul X">
+            </div>
+
+            <div class="form-group">
+                <label for="site">Site/link dedicat (opțional)</label>
+                <input type="url" id="site" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+                <label for="contact_email">Email tău pentru contact (NU se publică) *</label>
+                <input type="email" id="contact_email" required placeholder="email@example.com">
+            </div>
+
+            <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
+                <input type="checkbox" id="gdpr_consent" required style="margin-top:4px;width:auto;flex-shrink:0;">
+                <label for="gdpr_consent" style="font-size:13px;line-height:1.5;">
+                    Sunt de acord ca datele furnizate (email, IP) să fie procesate pentru a publica greva în calendar și pentru a fi contactat de organizatorii Greva Online dacă sunt necesare clarificări. Datele sunt șterse după procesare. Vezi
+                    <a href="/confidentialitate" target="_blank" style="color:#ffc800">politica de confidențialitate</a>.
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary">Trimite spre verificare</button>
+
+            <p style="margin-top:16px;font-size:12px;opacity:0.7;text-align:center">
+                Verificăm înscrierea manual înainte de a o publica în calendar. Te contactăm pe email dacă avem nevoie de detalii.
+            </p>
+        </form>
+    </div>
+
+<script>
+        document.getElementById('inscriere-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = e.target.querySelector('button[type=submit]');
+            btn.disabled = true;
+            btn.textContent = 'Se trimite...';
+
+            // Curățăm mesaje anterioare
+            const oldMsg = document.getElementById('form-message');
+            if (oldMsg) oldMsg.remove();
+
+            const get = function(id) {
+                return document.getElementById(id).value.trim();
+            };
+
+            const data = {
+                companie: get('companie'),
+                tip: get('tip'),
+                sector: get('sector'),
+                data_start: get('data_start'),
+                data_end: get('data_end'),
+                ora_start: get('ora_start'),
+                ora_end: get('ora_end'),
+                locatie: get('locatie'),
+                motiv: get('motiv'),
+                organizator: get('organizator'),
+                site: get('site'),
+                contact_email: get('contact_email')
+            };
+
+            try {
+                const response = await fetch('/api/inscriere', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showMessage(
+                        '✅ Trimis cu succes! Verificăm informațiile manual și publicăm în calendar în maxim 24h. Te vom contacta pe email dacă e cazul.',
+                        'success'
+                    );
+                    document.getElementById('inscriere-form').reset();
+                } else {
+                    showMessage('❌ ' + (result.error || 'Eroare necunoscută'), 'error');
+                }
+
+            } catch (err) {
+                showMessage('❌ Eroare de conexiune. Încearcă din nou.', 'error');
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Trimite spre verificare';
+            }
+        });
+
+        function showMessage(text, type) {
+            const msg = document.createElement('div');
+            msg.id = 'form-message';
+            msg.style.cssText = 'margin-top:16px;padding:14px 18px;border-radius:10px;white-space:pre-line;' +
+                (type === 'success'
+                    ? 'background:rgba(76,175,80,0.2);border:1px solid #4caf50;color:#d4ffd9;'
+                    : 'background:rgba(244,67,54,0.2);border:1px solid #f44336;color:#ffd0cc;');
+            msg.textContent = text;
+
+            document.getElementById('inscriere-form').appendChild(msg);
+            setTimeout(function() {
+                msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>

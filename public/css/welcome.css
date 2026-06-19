@@ -1,0 +1,203 @@
+/*
+ * welcome.css — Ecranul inițial cu termenii și butoanele de rol.
+ */
+
+#scene-welcome {
+    background: linear-gradient(135deg, #1a4d7a 0%, #0f2e4d 100%);
+    overflow-y: auto; /* singura excepție: pe mobile mic, terms pot depăși */
+    display: flex !important; /* override fix pentru .active */
+    align-items: center;
+    justify-content: center;
+}
+#scene-welcome:not(.active) {
+    display: none !important;
+}
+
+.welcome-container {
+    max-width: 560px;
+    width: 100%;
+    padding: 24px 20px;
+    text-align: center;
+}
+
+.logo {
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #fff;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #b8d4e8;
+    margin-top: 8px;
+    margin-bottom: 28px;
+}
+
+.warning-box {
+    background: rgba(255, 200, 0, 0.15);
+    border: 2px solid #ffc800;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+.warning-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+.warning-box p {
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.terms {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.terms ul {
+    margin-top: 8px;
+    padding-left: 4px;
+}
+.terms li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+}
+.terms li::before {
+    content: '•';
+    position: absolute;
+    left: 4px;
+    color: #ffc800;
+}
+
+.role-prompt {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.role-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.role-btn {
+    padding: 20px 16px;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    background: rgba(255,255,255,0.08);
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.role-btn:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+.role-btn:active {
+    transform: translateY(0);
+}
+.role-btn--visitor {
+    border-color: #7fa8c7;
+}
+.role-btn--protester {
+    border-color: #ffc800;
+    background: rgba(255, 200, 0, 0.12);
+}
+.role-btn--protester:hover {
+    background: rgba(255, 200, 0, 0.22);
+}
+
+.role-icon {
+    /* Container egal pentru ambele tipuri de iconuri */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    font-size: 56px;        /* pentru emoji */
+    line-height: 1;
+}
+
+.role-icon--img {
+    /* Suprascrie când e imagine */
+    display: block;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 0;
+}
+.role-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+.role-desc {
+    font-size: 13px;
+    opacity: 0.85;
+    line-height: 1.3;
+}
+
+.footer-note {
+    font-size: 12px;
+    color: #6a8aa3;
+    margin-top: 16px;
+}
+
+.page-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 32px 0 16px;
+}
+
+.page-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.page-links a:hover {
+    background: rgba(255, 200, 0, 0.15);
+    border-color: #ffc800;
+    color: #ffc800;
+    transform: translateY(-1px);
+}
+
+.page-links a:visited {
+    color: #fff;
+}
+.page-links a:visited:hover {
+    color: #ffc800;
+}
+
+@media (max-width: 480px) {
+    .role-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+

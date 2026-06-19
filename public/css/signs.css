@@ -1,0 +1,111 @@
+/*
+ * signs.css — Galeria de pancarte.
+ */
+
+#scene-signs {
+    background: linear-gradient(135deg, #1a4d7a 0%, #0f2e4d 100%);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+#scene-signs:not(.active) {
+    display: none !important;
+}
+
+.signs-container {
+    max-width: 680px;
+    width: 100%;
+    padding: 24px 20px;
+}
+
+.signs-container h2 {
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+}
+.signs-subtitle {
+    text-align: center;
+    color: #b8d4e8;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.signs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.sign-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    background: rgba(255,255,255,0.08);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.sign-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.14);
+}
+.sign-item.selected {
+    border-color: #ffc800;
+    background: rgba(255, 200, 0, 0.18);
+}
+
+.sign-item img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.sign-item-label {
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.2;
+    color: #e8e8e8;
+}
+
+.signs-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn-primary {
+    background: #ffc800;
+    color: #0a1a2a;
+}
+.btn-primary:hover:not(:disabled) {
+    background: #ffd83a;
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+@media (max-width: 480px) {
+    .signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

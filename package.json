@@ -1,0 +1,16 @@
+{
+  "name": "greva",
+  "version": "1.0.0",
+  "description": "Greva BRD - protest pașnic digital, mini-MMO browser",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "NODE_ENV=development node --watch server/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  }
+}

@@ -1,0 +1,403 @@
+/* pages.css — stiluri comune pentru paginile statice (despre, calendar, etc.) */
+
+.page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a4d7a 0%, #0f2e4d 100%);
+    color: #e8e8e8;
+    padding: 24px 20px 60px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-y: auto;
+}
+
+.page-container {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    color: #fff;
+    flex: 1;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.2); }
+
+.card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+.card h2 {
+    font-size: 20px;
+    color: #ffc800;
+    margin-bottom: 8px;
+}
+.card p { color: #d0e0ee; }
+
+.greva-card {
+    background: rgba(255,255,255,0.06);
+    border-left: 4px solid #ffc800;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+}
+.greva-card.status-activa { border-left-color: #ff4d4d; }
+.greva-card.status-anuntata { border-left-color: #ffc800; }
+.greva-card.status-incheiata { border-left-color: #6a8aa3; opacity: 0.7; }
+
+.greva-card h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+.greva-card .greva-meta {
+    color: #b8d4e8;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+.greva-card .greva-data {
+    display: inline-block;
+    background: #ffc800;
+    color: #0a1a2a;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+.form-group { margin-bottom: 18px; }
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #b8d4e8;
+}
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 15px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Fix dropdown: opțiunile sunt randate de browser, nu pot fi stilizate ca containerul.
+   Forțăm fundal închis + text alb. */
+/* Fix dropdown: opțiunile sunt randate de browser cu stil default (alb pe alb).
+   Forțăm fundal închis + text alb să se vadă pe fundalul nostru. */
+.form-group select option {
+    background: #1a4d7a;
+    color: #000000;
+    padding: 8px;
+}
+
+/* Iconuri date/time (icon calendar/ceas) - le facem albe ca să se vadă */
+.form-group input[type="date"]::-webkit-calendar-picker-indicator,
+.form-group input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #ffc800;
+    color: #0a1a2a;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+.btn-primary:hover { background: #ffd83a; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+.alert-success { background: rgba(76,175,80,0.2); border: 1px solid #4caf50; color: #d4ffd9; }
+.alert-error { background: rgba(244,67,54,0.2); border: 1px solid #f44336; color: #ffd0cc; }
+
+/* === Greve cards - upgrade === */
+
+.greva-card.status-activa { border-left-color: #ff4d4d; }
+.greva-card.status-anuntata { border-left-color: #ffc800; }
+.greva-card.status-incheiata { border-left-color: #6a8aa3; opacity: 0.75; }
+.greva-card.status-castigata { border-left-color: #4caf50; }
+.greva-card.status-compromis { border-left-color: #7986cb; }
+.greva-card.status-pierduta { border-left-color: #9e9e9e; opacity: 0.75; }
+
+.greva-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.greva-status-badge {
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-left: auto;
+}
+
+.greva-ora {
+    font-size: 12px;
+    opacity: 0.7;
+    color: #fff;
+}
+
+.greva-org {
+    margin-top: 8px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.greva-link {
+    margin-top: 6px;
+}
+
+.greva-link a {
+    color: #ffc800;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.greva-link a:hover { text-decoration: underline; }
+
+/* === News links === */
+.greva-news {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+}
+
+.greva-news strong {
+    color: #ffc800;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.greva-news ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.greva-news li {
+    padding: 4px 0;
+    line-height: 1.4;
+}
+
+.greva-news a {
+    color: #b8d4e8;
+    text-decoration: none;
+    word-break: break-word;
+}
+
+.greva-news a:hover {
+    color: #ffc800;
+    text-decoration: underline;
+}
+
+.news-source {
+    color: #ffc800;
+    font-weight: 600;
+}
+
+.news-date {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-left: 6px;
+}
+
+/* === Rezultat grevă === */
+.greva-rezultat {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 200, 0, 0.1);
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-left: 3px solid #ffc800;
+}
+
+/* === LINK-URI - STIL CURAT (override la default browser) === */
+
+/* Override pentru TOATE linkurile din carduri */
+.greva-card a,
+.greva-card a:visited {
+    color: #ffc800 !important;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.greva-card a:hover {
+    color: #ffd83a !important;
+    text-decoration: underline;
+}
+
+/* Site dedicat - styling card */
+.greva-card .greva-link {
+    margin-top: 8px;
+}
+
+.greva-card .greva-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(255, 200, 0, 0.1);
+    border: 1px solid rgba(255, 200, 0, 0.3);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.greva-card .greva-link a:hover {
+    background: rgba(255, 200, 0, 0.2);
+    text-decoration: none;
+}
+
+/* === Știri - formatare clară === */
+.greva-card .greva-news {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+}
+
+.greva-card .greva-news strong {
+    color: #ffc800 !important;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.greva-card .greva-news ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.greva-card .greva-news li {
+    padding: 6px 0;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.greva-card .greva-news li:last-child {
+    border-bottom: none;
+}
+
+.greva-card .greva-news a {
+    word-break: break-word;
+    text-decoration: none;
+    color: #fff !important;
+}
+
+.greva-card .greva-news a:hover {
+    color: #ffc800 !important;
+    text-decoration: underline;
+}
+
+.greva-card .news-source {
+    color: #ffc800 !important;
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+.greva-card .news-date {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-left: 8px;
+    color: #b8d4e8;
+}
+
+.greva-card.status-incheiata,
+.greva-card.status-castigata,
+.greva-card.status-compromis,
+.greva-card.status-pierduta {
+    opacity: 0.7;
+}
+
+.greva-card.status-incheiata:hover,
+.greva-card.status-castigata:hover,
+.greva-card.status-compromis:hover,
+.greva-card.status-pierduta:hover {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+/* Culori bară stânga - rămân distincte chiar dacă cardurile sunt estompate */
+.greva-card.status-activa      { border-left-color: #ff4d4d; }
+.greva-card.status-anuntata    { border-left-color: #ffc800; }
+.greva-card.status-incheiata   { border-left-color: #6a8aa3; }
+.greva-card.status-castigata   { border-left-color: #4caf50; }
+.greva-card.status-compromis   { border-left-color: #7986cb; }
+.greva-card.status-pierduta    { border-left-color: #9e9e9e; }
+
+/* === Separator între greve active/urmează și cele încheiate === */
+.greve-separator {
+    display: flex;
+    align-items: center;
+    margin: 32px 0 20px;
+    color: #b8d4e8;
+    opacity: 0.6;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.greve-separator::before,
+.greve-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(184, 212, 232, 0.3);
+}
+
+.greve-separator span {
+    padding: 6px 16px;
+    background: rgba(184, 212, 232, 0.08);
+    border-radius: 999px;
+    color: #b8d4e8;
+}
+
