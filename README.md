@@ -22,10 +22,12 @@ Greva Online oferă un spațiu pașnic de protest digital unde angajații care n
 - **Process management:** PM2
 
 ## Arhitectură
-Browser ←─ WebSocket ─→ Node.js (port 3000)
-↓                         ↓
-Caddy (reverse proxy) ←──────┘
-↓
+Browser <- WebSocket -> Node.js (port 3000)
+|                         |
+\/                        \/
+Caddy (reverse proxy) <--
+|
+\/
 Cloudflare (CDN + HTTPS)
 
 Coordonate logice 0-10000, poziționare prin procente, fără pathfinding. Toate validările sunt server-side.
