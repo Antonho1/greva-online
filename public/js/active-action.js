@@ -79,12 +79,6 @@
     function formatTimeRemaining(action) {
         const now = new Date();
 
-        // Dacă e activă acum → cât mai durează până la sfârșit
-        if (now >= action._start && now <= action._end) {
-            const diff = action._end - now;
-            return 'se termină în ' + humanizeDuration(diff);
-        }
-
         // Dacă urmează → cât până începe
         if (action._start > now) {
             const diff = action._start - now;
