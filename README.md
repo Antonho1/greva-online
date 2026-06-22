@@ -6,13 +6,18 @@ Platformă digitală de protest pașnic pentru susținerea grevelor, pichetăril
 
 ## Ce face
 
-Greva Online oferă un spațiu pașnic de protest digital unde angajații care nu pot participa fizic la o acțiune (din alte orașe, în concediu, sub presiune ierarhică) își pot exprima solidaritatea sub forma unor avatare cu pancarte, în timp real.
+**Greva Online** nu este doar o unealtă tehnică, ci o platformă completă de **conștientizare, promovare și solidaritate**. Proiectul aduce în prim-plan problemele cu care se confruntă sindicatele și angajații în raport cu companiile, oferind vizibilitate cauzelor care contează și un mediu sigur de exprimare.
 
-- 🦆 Protest live cu avatare-rățuște care țin pancarte
-- 📅 Calendar public al grevelor anunțate
-- 📝 Sistem de înscriere pentru noi acțiuni (verificare manuală)
-- 🔒 Complet anonim — fără cont, fără cookie-uri de tracking
-- ✊ Suport pentru greve, pichetări și proteste
+Platforma oferă un spațiu pașnic de protest digital unde angajații care nu pot participa fizic la o acțiune (din alte orașe, aflați în concediu sau sub presiune ierarhică) își pot exprima susținerea în timp real.
+
+### ✨ Funcționalități Cheie
+
+* **🦆 Protest Live:** Avatare-rățuște interactive care țin pancarte personalizate, randate în timp real.
+* **📅 Calendar Public:** Un hub centralizat pentru monitorizarea și promovarea grevelor anunțate la nivel național/sectorial.
+* **📝 Implicare Activă:** Sistem rapid de înscriere pentru noi acțiuni (cu verificare și moderare manuală).
+* **📢 Conștientizare (Awareness):** Spațiu dedicat expunerii abuzurilor, revendicărilor și problemelor dintre angajați și companii.
+* **🔒 Anonimitate Garanatată:** Complet anonim — fără creare de conturi și fără cookie-uri de tracking.
+* **✊ Solidaritate:** Suport tehnic și vizual pentru greve, pichetări și proteste de orice amploare.
 
 ## Stack tehnic
 
@@ -22,13 +27,28 @@ Greva Online oferă un spațiu pașnic de protest digital unde angajații care n
 - **Process management:** PM2
 
 ## Arhitectură
-Browser <- WebSocket -> Node.js (port 3000)
-|                         |
-\/                        \/
-Caddy (reverse proxy) <--
-|
-\/
-Cloudflare (CDN + HTTPS)
+
+```text
+┌────────────────────────────────────────────────────────┐
+│                        Browser                         │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+                  WebSocket │ │ 
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│                  Node.js (Port 3000)                   │
+└───────────────────────────┬────────────────────────────┘
+                            │ ▲
+                            │ │ Reverse Proxy
+                            ▼ │
+┌────────────────────────────────────────────────────────┐
+│                         Caddy                          │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│                Cloudflare (CDN + HTTPS)                │
+└────────────────────────────────────────────────────────┘
 
 Coordonate logice 0-10000, poziționare prin procente, fără pathfinding. Toate validările sunt server-side.
 
