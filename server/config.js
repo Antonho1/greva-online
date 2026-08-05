@@ -101,7 +101,7 @@ module.exports = {
     VALID_SIGNS: [
         'vrem_dreptate',
         'respectati_angajatii',
-        'pichetare_brd',
+        'greva_la',
         'salarii_decente',
         'nu_concedierilor',
         'solidaritate'

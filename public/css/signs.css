@@ -109,3 +109,118 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* ============================================================
+   RESPONSIVE — Tabletă și telefon (galeria de pancarte)
+   ============================================================ */
+
+/* === TABLETĂ (până la 768px) === */
+@media (max-width: 768px) {
+    .signs-container {
+        max-width: 100%;
+        padding: 20px 18px;
+    }
+
+    .signs-container h2 {
+        font-size: 24px;
+    }
+
+    .signs-subtitle {
+        margin-bottom: 20px;
+    }
+}
+
+/* === TELEFON (până la 600px) === */
+@media (max-width: 600px) {
+    .signs-container {
+        padding: 18px 14px;
+    }
+
+    .signs-container h2 {
+        font-size: 22px;
+    }
+
+    .signs-subtitle {
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    /* 2 coloane pe telefon - pancartele se văd mai mari și mai clare */
+    .signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .sign-item {
+        padding: 10px;
+    }
+
+    .sign-item-label {
+        font-size: 11px;
+    }
+
+    /* Butoanele de acțiune (Înapoi / Intră) ocupă lățimea egal */
+    .signs-actions {
+        gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        flex: 1;
+        padding: 14px 16px;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+/* === TELEFON MIC (până la 400px) === */
+@media (max-width: 400px) {
+    .signs-container {
+        padding: 16px 12px;
+    }
+
+    .signs-grid {
+        gap: 8px;
+    }
+
+    .sign-item {
+        padding: 8px;
+        border-width: 2px;
+    }
+
+    .sign-item-label {
+        font-size: 10.5px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 13px 12px;
+        font-size: 14px;
+    }
+}
+
+/* === LANDSCAPE pe telefon (ecran lat dar scund) === */
+@media (max-height: 480px) and (orientation: landscape) {
+    #scene-signs {
+        align-items: flex-start;
+    }
+
+    .signs-container {
+        padding: 14px 18px;
+    }
+
+    .signs-container h2 {
+        font-size: 20px;
+    }
+
+    .signs-subtitle {
+        margin-bottom: 12px;
+    }
+
+    /* În landscape, 3 coloane merg bine (ecranul e lat) */
+    .signs-grid {
+        grid-template-columns: repeat(3, 1fr);
+        margin-bottom: 14px;
+    }
+}

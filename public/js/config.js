@@ -19,7 +19,7 @@ window.GREVA_CONFIG = {
     SIGNS: [
                 { id: 'vrem_dreptate',       label: 'Vrem dreptate!',         file: 'vrem_dreptate.webp' },
                 { id: 'respectati_angajatii',label: 'Respectați angajații!',  file: 'respectati_angajatii.webp' },
-                { id: 'pichetare_brd',           label: 'Pichetare BRD',          file: 'pichetare_brd.webp' },
+                { id: 'greva_la',           label: 'Greva la *Companie*',          file: 'greva_la.webp' },
                 { id: 'salarii_decente',     label: 'Salarii decente!',       file: 'salarii_decente.webp' },
                 { id: 'nu_concedierilor',    label: 'Nu concedierilor!',      file: 'nu_concedierilor.webp' },
                 { id: 'solidaritate',        label: 'Solidaritate',           file: 'solidaritate.webp' },

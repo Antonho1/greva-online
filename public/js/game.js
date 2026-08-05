@@ -32,16 +32,16 @@
 
             if (data.role === 'protester') {
                 this.myId = data.me.id;
-                // Ascunde chat input pentru vizitatori; afișează pentru protestatari
                 document.getElementById('chat-container').classList.remove('hidden');
             } else {
                 document.getElementById('chat-container').classList.add('hidden');
             }
 
-            // Update counters
-            this._updateCounters(data.counts);
+            // Curăță rățuștele existente (reconectare după sleep/pierdere semnal)
+            this.ducksLayer.innerHTML = '';
+            this.ducksById.clear();
 
-            // Randează toate rățuștele existente într-un singur batch
+            this._updateCounters(data.counts);
             this._renderInitialDucks(data.protesters);
         },
 
@@ -140,7 +140,6 @@ showBubble(socketId, text) {
             const duck = this.ducksById.get(socketId);
             if (!duck) return;
 
-            // Înlocuiește bula existentă a acestui user (dacă e)
             const existingId = 'bubble-' + socketId;
             const existing = document.getElementById(existingId);
             if (existing) existing.remove();
@@ -150,10 +149,18 @@ showBubble(socketId, text) {
             bubble.id = existingId;
             bubble.textContent = text;
 
-            // Poziționăm bula la coordonatele rățuștei (în layer separat)
-            // ca să nu fie prinsă de stacking context-ul rățuștei
+            // duck.style.top = pozitia picioarelor (%) în ducks-layer
+            // Convertim la pixeli și scădem înălțimea rățuștei ca să ajungem deasupra capului
+            const layerH = this.ducksLayer.offsetHeight;
+            const topPct = parseFloat(duck.style.top) / 100;
+            const duckH = duck.offsetWidth || 64; // rățușca e pătrată
+            // Poziția capului rățuștei în pixeli (picioare - înălțime)
+            const headPx = topPct * layerH - duckH;
+            // Convertim înapoi la procente pentru a rămâne responsive la resize
+            const bubbleTopPct = (headPx / layerH) * 100;
+
             bubble.style.left = duck.style.left;
-            bubble.style.top = duck.style.top;
+            bubble.style.top = bubbleTopPct + '%';
 
             this.ducksLayer.appendChild(bubble);
 

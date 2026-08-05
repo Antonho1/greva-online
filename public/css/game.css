@@ -114,13 +114,11 @@
 }
 
 .chat-bubble--floating {
-    /* Bulă în layer separat - poziționată la coordonatele rățuștei */
     position: absolute;
-    /* Reset position - folosim left/top setate prin JS */
     bottom: auto;
-    /* Offset deasupra rățuștei: -100% pentru rățușcă + spațiu */
-    transform: translate(-50%, -180%);
-    /* z-index uriaș */
+    /* JS calculează top = capul rățuștei în px→%.
+       Mutăm bula complet deasupra acelui punct + 8px spațiu */
+    transform: translate(-50%, calc(-100% - 8px));
     z-index: 5000;
 }
 
@@ -415,3 +413,117 @@
     }
 }
 
+
+
+/* ============================================================
+   RESPONSIVE — Rafinări suplimentare pentru tabletă și telefon
+   (completează breakpoint-urile existente de mai sus)
+   ============================================================ */
+
+/* === TABLETĂ (până la 768px) === */
+@media (max-width: 768px) {
+    .duck {
+        width: 56px;
+        height: 56px;
+    }
+
+    .duck-sign {
+        width: 64px;
+        height: 50px;
+    }
+}
+
+/* === TELEFON (până la 600px) === */
+@media (max-width: 600px) {
+    /* HUD - elementele se pot înfășura pe 2 rânduri fără probleme */
+    .hud-top {
+        gap: 6px;
+    }
+
+    .counter {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+
+    .counter-icon {
+        font-size: 14px;
+    }
+
+    /* Statusul conexiunii rămâne mic și discret */
+    .connection-status {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    /* Chat - input mare pentru atingere ușoară */
+    .chat-container {
+        padding: 10px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .chat-input {
+        padding: 12px 14px;
+        font-size: 16px; /* 16px previne zoom automat pe iOS */
+    }
+
+    .chat-send {
+        padding: 0 18px;
+        font-size: 14px;
+    }
+
+    /* Bula de chat mai îngustă ca să încapă pe ecran mic */
+    .chat-bubble {
+        max-width: 200px;
+        font-size: 13px;
+    }
+
+    /* Modalul (ex. "Conexiune închisă") - margini ca să nu lipească de margini */
+    .modal-content {
+        margin: 0 16px;
+        padding: 24px 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 20px;
+    }
+}
+
+/* === TELEFON MIC (până la 400px) === */
+@media (max-width: 400px) {
+    .counter-label {
+        /* Ascunde cuvântul "protestatari"/"vizitatori", lasă doar numărul + icon
+           ca să nu se înghesuie pe ecrane foarte mici */
+        display: none;
+    }
+
+    .exit-btn {
+        padding: 6px 10px;
+        font-size: 11.5px;
+    }
+
+    .chat-bubble {
+        max-width: 160px;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .chat-send {
+        padding: 0 14px;
+    }
+}
+
+/* === LANDSCAPE pe telefon (ecran lat dar scund) === */
+@media (max-height: 480px) and (orientation: landscape) {
+    /* Banner-ul de acțiune mai sus și mai mic ca să nu acopere rățuștele */
+    .action-banner {
+        top: 56px;
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+
+    /* Chat-ul ocupă mai puțin spațiu vertical */
+    .chat-container {
+        padding: 8px 12px;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+}

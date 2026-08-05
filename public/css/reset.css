@@ -65,3 +65,29 @@ img {
 .scene.active {
     display: block;
 }
+
+/* ============================================================
+   RESPONSIVE — Comportament mobil de bază
+   ============================================================ */
+
+html, body {
+    /* Previne "pull-to-refresh" și bounce-ul de scroll pe mobil în zona de joc */
+    overscroll-behavior: none;
+    /* Previne ajustarea automată a mărimii textului la rotirea telefonului */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Inputurile nu declanșează zoom pe iOS dacă au minim 16px.
+   Asigurăm o bază sigură (componentele pot suprascrie). */
+input, textarea, select {
+    font-size: 16px;
+}
+
+/* Suport pentru zonele sigure (notch / bară gestuală) pe tot ecranul */
+@supports (padding: max(0px)) {
+    .scene {
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+    }
+}
