@@ -1,7 +1,7 @@
 {
-  "name": "greva",
+  "name": "greva.online",
   "version": "1.0.0",
-  "description": "Greva BRD - protest pașnic digital, mini-MMO browser",
+  "description": "Greva Online - protest pașnic digital",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
