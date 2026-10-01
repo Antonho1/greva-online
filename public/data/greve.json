@@ -215,6 +215,23 @@
           "data": "12 august 2026"
         }
       ]
+    },
+    {
+      "id": 7,
+      "tip": "greva",
+      "data_start": "2026-10-01",
+      "data_end": "2026-10-01",
+      "ora_start": "11:30",
+      "ora_end": "11:45",
+      "companie": "LEGO",
+      "sector": "Educație",
+      "locatie": "acasa",
+      "motiv": "e naspa",
+      "organizator": "sindicatul kauri",
+      "site": "",
+      "status_override": "",
+      "rezultat": "",
+      "news": []
     }
   ]
 }
