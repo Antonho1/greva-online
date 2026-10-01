@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /socket.io/
+
+Sitemap: https://greva.online/sitemap.xml

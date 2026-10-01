@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="theme-color" content="#1a4d7a">
 
-    <meta name="description" content="Greva Online - platformă digitală de protest pașnic. Solidaritate cu angajații.">
+    <meta name="description" content="Greva Online - platformă digitală de protest pașnic și calendarul grevelor din România. Solidaritate cu angajații din toate sectoarele.">
 
     <!-- Open Graph (Facebook, WhatsApp, Discord, Slack) -->
     <meta property="og:title" content="Greva Online">
@@ -14,7 +14,8 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Rățuște cu pancarte de protest pe un iaz — Greva Online">
-    <meta property="og:url" content="https://greva.online">
+    <meta property="og:url" content="https://greva.online/">
+    <meta property="og:site_name" content="Greva Online">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ro_RO">
 
@@ -31,7 +32,7 @@
     <meta name="author" content="Greva Online">
 
     <!-- Verificare canonical URL -->
-    <link rel="canonical" href="https://greva.online">
+    <link rel="canonical" href="https://greva.online/">
 
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
@@ -43,11 +44,41 @@
     <link rel="preload" href="/assets/ducks/duck.webp" as="image">
 
     <!-- CSS-uri concatenate logic (Caddy va servi gzipped) -->
-<link rel="stylesheet" href="/css/reset.css?v=66">
-<link rel="stylesheet" href="/css/welcome.css?v=66">
-<link rel="stylesheet" href="/css/signs.css?v=66">
-<link rel="stylesheet" href="/css/game.css?v=66">
-<link rel="stylesheet" href="/css/animations.css?v=66">
+<link rel="stylesheet" href="/css/reset.css?v=67">
+<link rel="stylesheet" href="/css/welcome.css?v=67">
+<link rel="stylesheet" href="/css/signs.css?v=67">
+<link rel="stylesheet" href="/css/game.css?v=67">
+<link rel="stylesheet" href="/css/animations.css?v=67">
+
+    <!-- Date structurate pentru Google (numele site-ului, organizația, profiluri) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://greva.online/#website",
+                "url": "https://greva.online/",
+                "name": "Greva Online",
+                "inLanguage": "ro-RO",
+                "publisher": { "@id": "https://greva.online/#organization" }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://greva.online/#organization",
+                "name": "Greva Online",
+                "url": "https://greva.online/",
+                "logo": "https://greva.online/assets/icon-192.png",
+                "email": "contact@greva.online",
+                "sameAs": [
+                    "https://www.instagram.com/greva.online/",
+                    "https://github.com/Antonho1/greva-online"
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
 <body>
 
     <!--
@@ -99,6 +130,7 @@
                 <a href="/inscriere">📝 Înscrie grevă</a>
                 <a href="/doneaza">💛 Donează</a>
                 <a href="/confidentialitate">🔒 Confidențialitate</a>
+                <a href="https://www.instagram.com/greva.online/" target="_blank" rel="noopener">📸 Instagram</a>
                 </div>
             <p class="footer-note">greva.online · Suntem afiliați doar cu spiritul civic</p>
         </div>
@@ -196,14 +228,14 @@
     <script src="/vendor/socket.io.min.js"></script>
 
     <!-- Modulele aplicației, în ordinea corectă a dependențelor -->
-<script src="/js/config.js?v=66"></script>
-<script src="/js/active-action.js?v=66"></script>
-<script src="/js/strike-sign.js?v=66"></script>
-<script src="/js/welcome.js?v=66"></script>
-<script src="/js/signs.js?v=66"></script>
-<script src="/js/socket-client.js?v=66"></script>
-<script src="/js/game.js?v=66"></script>
-<script src="/js/chat.js?v=66"></script>
-<script src="/js/main.js?v=66"></script>
+<script src="/js/config.js?v=67"></script>
+<script src="/js/active-action.js?v=67"></script>
+<script src="/js/strike-sign.js?v=67"></script>
+<script src="/js/welcome.js?v=67"></script>
+<script src="/js/signs.js?v=67"></script>
+<script src="/js/socket-client.js?v=67"></script>
+<script src="/js/game.js?v=67"></script>
+<script src="/js/chat.js?v=67"></script>
+<script src="/js/main.js?v=67"></script>
 </body>
 </html>
