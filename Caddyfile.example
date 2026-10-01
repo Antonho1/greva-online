@@ -1,0 +1,56 @@
+# Caddyfile.example — Configurație Caddy pentru Greva Online.
+#
+# Copiază-l și adaptează-l:
+#   cp Caddyfile.example Caddyfile
+#   (schimbă domeniul, calea spre public/ și certificatele)
+#   sudo cp Caddyfile /etc/caddy/Caddyfile && sudo systemctl reload caddy
+#
+# Presupune:
+# - domeniul e în spatele Cloudflare (proxy portocaliu activ), cu SSL/TLS pe
+#   „Full (strict)” și un Cloudflare Origin Certificate instalat pe server;
+# - serverul Node rulează pe 127.0.0.1:3000 (vezi ecosystem.config.js).
+#
+# Fără Cloudflare: șterge linia „tls ...” și Caddy obține singur un
+# certificat Let's Encrypt.
+
+greva.online {
+	tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key
+
+	encode zstd gzip
+
+	# WebSocket (Socket.io) + formularul de înscriere → Node
+	@node path /socket.io/* /api/*
+	handle @node {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# Restul: fișiere statice. /calendar → calendar.html etc.
+	handle {
+		root * /var/www/greva/public
+		try_files {path} {path}.html
+		file_server
+	}
+
+	# Datele calendarului se schimbă des — fără cache
+	@data path /data/*
+	header @data Cache-Control "no-cache"
+
+	# Imagini, fonturi, CSS, JS — cache 7 zile (fișierele au ?v=N la schimbări)
+	@static path /assets/* /css/* /js/* /vendor/*
+	header @static Cache-Control "public, max-age=604800"
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	# Fără directiva „log”, Caddy nu scrie loguri de acces (deci nici IP-uri).
+}
+
+www.greva.online {
+	tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key
+	redir https://greva.online{uri} permanent
+}

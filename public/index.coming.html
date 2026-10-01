@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Greva Online - În pregătire</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/icon-192.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a4d7a 0%, #0f2e4d 100%);
+            color: #fff;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .scene {
+            position: relative;
+            width: 200px;
+            height: 220px;
+            margin: 0 auto 30px;
+        }
+
+        .duck {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background-image: url('/assets/ducks/duck.webp');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            animation: bob 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+        }
+
+        .sign {
+            position: absolute;
+            bottom: 90px;
+            left: 55%;
+            width: 110px;
+            height: 85px;
+            background-image: url('/assets/signs/respectati_angajatii.webp');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transform-origin: 15% 100%;
+            animation: sign-wave 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(-12px); }
+        }
+
+        @keyframes sign-wave {
+            0%, 100% { transform: rotate(-8deg); }
+            50%      { transform: rotate(8deg); }
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .intro-text {
+            font-size: 18px;
+            opacity: 0.85;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffc800;
+            color: #0a1a2a;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* === Links section === */
+        .page-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 24px auto 16px;
+            max-width: 500px;
+        }
+
+        .page-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+        }
+
+        .page-links a:hover {
+            background: rgba(255, 200, 0, 0.15);
+            border-color: #ffc800;
+            color: #ffc800;
+            transform: translateY(-1px);
+        }
+
+        .page-links a:visited { color: #fff; }
+        .page-links a:visited:hover { color: #ffc800; }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 13px;
+            opacity: 0.5;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="scene">
+            <div class="duck"></div>
+            <div class="sign"></div>
+        </div>
+        <h1>Greva Online</h1>
+        <p class="intro-text">Pregătim protestul digital. Reveniți în curând pentru a participa la cea mai pașnică grevă din mediul online.</p>
+        <span class="badge">În construcție</span>
+    </div>
+
+    <nav class="page-links">
+        <a href="/calendar">📅 Calendar greve</a>
+        <a href="/despre">ℹ️ Despre</a>
+        <a href="/inscriere">📝 Înscrie grevă</a>
+        <a href="/doneaza">💛 Donează</a>
+        <a href="/confidentialitate">🔒 Confidențialitate</a>
+    </nav>
+
+    <p class="footer-note">greva.online · Suntem afiliați doar cu spiritul civic </p>
+</body>
+</html>

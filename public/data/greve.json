@@ -1,0 +1,220 @@
+{
+  "greve": [
+    {
+      "id": 1,
+      "tip": "pichetare",
+      "data_start": "2026-06-02",
+      "data_end": "2026-06-02",
+      "ora_start": "12:30",
+      "ora_end": "16:30",
+      "companie": "BRD - Société Générale",
+      "sector": "Bancar / Financiar",
+      "locatie": "București, BRD Tower",
+      "oras": "București",
+      "pancarta": "BRD",
+      "motiv": "Salarii decente, respectarea contractelor colective, condiții de muncă, oprirea concedierilor abuzive",
+      "organizator": "Sindicatul Impact",
+      "site": "https://sindicatul-impact.ro/",
+      "status_override": "pierduta",
+      "rezultat": "S-au reluat negocierile, dar nu s-a ajuns la un acord -> Grevă pe 13/08/2026",
+      "news": [
+        {
+          "sursa": "DCnews",
+          "titlu": "Sindicatul IMPACT anunță pichetarea sediului BRD",
+          "url": "https://www.dcnews.ro/sindicatul-impact-anunta-pichetarea-sediului-brd-salariatii-resping-reducerea-drepturilor-din-contractul-colectiv-de-munca_1057920.html",
+          "data": "29 mai 2026"
+        },
+        {
+          "sursa": "Economica.net",
+          "titlu": "Conflict de muncă la BRD. Angajații acuză pierderi de mii de lei",
+          "url": "https://www.economica.net/conflict-de-munca-la-una-dintre-cele-mai-mari-banci-din-romania-angajatii-brd-acuza-pierderi-de-mii-de-lei-per-salariat-tensiunile-continua-banca-confirma-esecul-negocierilor_947975.html",
+          "data": "07 iunie 2026"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "tip": "greva",
+      "data_start": "2026-07-28",
+      "data_end": "2026-07-30",
+      "ora_start": "08:00",
+      "ora_end": "20:00",
+      "companie": "Ministerul Sanatatii",
+      "sector": "Sănătate",
+      "locatie": "În spitale",
+      "oras": "Național",
+      "pancarta": "Sănătate",
+      "motiv": "Nerespectarea negocierilor initiale, prea putini oameni, salarii prea mici",
+      "organizator": "Federatia Sanitas",
+      "site": "https://federatiasanitas.ro/",
+      "status_override": "compromis",
+      "rezultat": "Suspendata, se reiau negocierile",
+      "news": [
+        {
+          "sursa": "Radio Romania Actualitati",
+          "titlu": "Sindicalistii, ar putea declanșa din 28 iulie greva generala",
+          "url": "https://www.romania-actualitati.ro/stiri/romania/sindicalistii-din-sanatate-ar-putea-declansa-din-28-iulie-greva-generala-pe-termen-nelimitat-id231692.html",
+          "data": "20 iulie 2026"
+        },
+        {
+          "sursa": "HotNews",
+          "titlu": "Greva Sanitas, suspendată după trei zile",
+          "url": "https://hotnews.ro/greva-din-spitale-la-care-au-participat-doar-o-parte-dintre-angajati-a-fost-suspendata-2313780",
+          "data": "31 iulie 2026"
+        },
+        {
+          "sursa": "Radio Romania Actualitati",
+          "titlu": "Greva este suspendată, dar poate fi reluată",
+          "url": "https://www.romania-actualitati.ro/stiri/romania/sanitas-greva-este-suspendata-dar-poate-fi-reluata-id232268.html",
+          "data": "01 august 2026"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "tip": "greva",
+      "data_start": "2025-12-16",
+      "data_end": "2025-12-18",
+      "ora_start": "04:00",
+      "ora_end": "13:00",
+      "companie": "CT BUS SA",
+      "sector": "Transport / Logistică",
+      "locatie": "nu pe traseu",
+      "oras": "Constanța",
+      "pancarta": "CT BUS",
+      "motiv": "Nerespectarea contractului colectiv de muncă",
+      "organizator": "Angajatii CT BUS SA",
+      "site": "",
+      "status_override": "pierduta",
+      "rezultat": "S-au reluat negocierile, dar pe 06/08/2026 negocierile esueaza",
+      "news": [
+        {
+          "sursa": "Dobrogea LIVE",
+          "titlu": "Constanța, un oraș paralizat de greva",
+          "url": "https://dobrogealive.ro/constanta-un-oras-paralizat-de-greva-spontana-a-angajatilor-ct-bus-primarul-vergil-chitac-s-a-ascuns-in-spatele-comunicatelor/",
+          "data": "16 decembrie 2025"
+        },
+        {
+          "sursa": "Agerpres",
+          "titlu": "Salariații CT Bus continuă protestul",
+          "url": "https://agerpres.ro/social/2025/12/17/constanta-salariatii-ct-bus-continua-protestul-este-o-a-doua-zi-fara-autobuze-pe-trasee--1512666",
+          "data": "17 decembrie 2025"
+        },
+        {
+          "sursa": "Info Sud Est",
+          "titlu": "Autobuzele nu circulă la Constanța, A treia zi de protest",
+          "url": "https://www.info-sud-est.ro/autobuzele-nu-circula-la-constanta-a-treia-zi-consecutiva-de-protest-a-angajatilor-ct-bus/",
+          "data": "18 decembrie 2025"
+        },
+        {
+          "sursa": "Ziarul Amprenta",
+          "titlu": "Negocieri EȘUATE la CT BUS SA",
+          "url": "https://ziarulamprenta.ro/administratie-locala/negocieri-esuate-la-compania-de-transport-in-comun-ct-bus-sa-conflictul-colectiv-de-munca-ar-putea-duce-la-o-noua-greva-ce-spun-sindicalistii/574980/",
+          "data": "06 august 2026"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "tip": "greva",
+      "data_start": "2026-07-16",
+      "data_end": "2026-08-04",
+      "ora_start": "",
+      "ora_end": "",
+      "companie": "STP Alba Iulia",
+      "sector": "Transport / Logistică",
+      "locatie": "Primaria Alba Iulia",
+      "oras": "Alba Iulia",
+      "pancarta": "STP Alba",
+      "motiv": "Salarii restante de 3 luni",
+      "organizator": "Angajatii STP Alba Iulia",
+      "site": "",
+      "status_override": "",
+      "rezultat": "",
+      "news": [
+        {
+          "sursa": "PRO TV",
+          "titlu": "Alba Iulia, de o lună fără transport public",
+          "url": "https://stirileprotv.ro/stiri/actualitate/alba-iulia-de-o-luna-fara-transport-public-angajatii-stp-neplati-i-de-trei-luni-au-iesit-in-strada-ce-spune-primarul.html",
+          "data": "16 iulie 2026"
+        },
+        {
+          "sursa": "Alba 24",
+          "titlu": "Oamenii au ieșit pentru a doua zi în stradă",
+          "url": "https://alba24.ro/video-protest-cu-vuvuzele-al-angajatilor-stp-in-fata-primariei-alba-iulia-oamenii-au-iesit-pentru-a-doua-zi-in-strada-1149038.html",
+          "data": "17 iulie 2026"
+        },
+        {
+          "sursa": "Alba Iulia Info",
+          "titlu": "Șoferii STP Alba Iulia, miting în deplasare cu un autobuz etajat",
+          "url": "https://www.albaiuliainfo.ro/soferii-stp-alba-iulia-miting-in-deplasare-cu-un-autobuz-etajat-cer-plata-salariilor-restante-si-reluarea-transportului-public-87590.html",
+          "data": "28 iulie 2026"
+        },
+        {
+          "sursa": "Alba 24",
+          "titlu": "Transportul cu autobuzele ar putea fi reluat la Alba Iulia",
+          "url": "https://alba24.ro/video-transportul-cu-autobuzele-ar-putea-fi-reluat-la-alba-iulia-dupa-discutii-intre-primarie-si-aida-tl-anuntul-autoritatilor-1151790.html",
+          "data": "04 august 2026"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "tip": "pichetare",
+      "data_start": "2026-07-07",
+      "data_end": "2026-07-07",
+      "ora_start": "",
+      "ora_end": "",
+      "companie": "Combinatul Siderurgic din Galați",
+      "sector": "Industrie / Producție",
+      "locatie": "în fața Prefecturii Galați",
+      "oras": "Galați",
+      "pancarta": "Combinatul Galați",
+      "motiv": "Salarii restante si incertitudine",
+      "organizator": "Angajații Combinatului Siderurgic din Galați",
+      "site": "",
+      "status_override": "",
+      "rezultat": "",
+      "news": [
+        {
+          "sursa": "Europa FM",
+          "titlu": "Peste 300 de angajați cer plata salariilor restante și soluții pentru salvarea combinatului",
+          "url": "https://www.europafm.ro/protest-liberty-galati-salarii-restante-combinat/",
+          "data": "14 iulie 2026"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "tip": "greva",
+      "data_start": "2026-08-13",
+      "data_end": "2026-08-13",
+      "ora_start": "15:00",
+      "ora_end": "17:00",
+      "companie": "BRD - Groupe Société Générale",
+      "sector": "Bancar / Financiar",
+      "locatie": "La sediu",
+      "oras": "",
+      "pancarta": "BRD",
+      "motiv": "Esecul negocierilor privind contractul colectiv de munca",
+      "organizator": "Sindicatul Impact",
+      "site": "https://sindicatul-impact.ro/",
+      "status_override": "",
+      "rezultat": "",
+      "news": [
+        {
+          "sursa": "Profit.ro",
+          "titlu": "Angajații BRD intră în grevă de avertisment",
+          "url": "https://www.profit.ro/povesti-cu-profit/financiar/ultima-ora-angajatii-brd-intra-in-greva-de-avertisment-22619902",
+          "data": "12 august 2026"
+        },
+        {
+          "sursa": "Digi 24",
+          "titlu": "Reacția BRD după ce salariații au anunțat greva de avertisment",
+          "url": "https://www.digi24.ro/stiri/economie/reactia-brd-dupa-ce-salariatii-au-anuntat-greva-de-avertisment-mesajul-pentru-clientii-bancii-3903129",
+          "data": "12 august 2026"
+        }
+      ]
+    }
+  ]
+}

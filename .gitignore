@@ -1,0 +1,18 @@
+# Dependențe
+node_modules/
+
+# Date sensibile — NU se urcă niciodată
+server/secrets.js
+.env
+
+# Înscrieri primite prin formular (conțin email + IP)
+data/*.jsonl
+
+# Configurația reală Caddy (în repo e doar Caddyfile.example)
+Caddyfile
+
+# Loguri
+*.log
+
+# Notițe locale
+cum rulezi

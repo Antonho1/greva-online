@@ -1,0 +1,248 @@
+/* Font pentru pancarta generată „Grevă la ...” (găzduit local, SIL OFL 1.1) */
+@font-face {
+    font-family: "Balsamiq Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/balsamiq-sans-latin-ext-700.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+20A0-20C0, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+    font-family: "Balsamiq Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/balsamiq-sans-latin-700.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+
+/*
+ * signs.css — Galeria de pancarte.
+ */
+
+#scene-signs {
+    background: linear-gradient(135deg, #1a4d7a 0%, #0f2e4d 100%);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+#scene-signs:not(.active) {
+    display: none !important;
+}
+
+.signs-container {
+    max-width: 680px;
+    width: 100%;
+    padding: 24px 20px;
+}
+
+.signs-container h2 {
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+}
+.signs-subtitle {
+    text-align: center;
+    color: #b8d4e8;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.signs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.sign-item[hidden] {
+    display: none;
+}
+
+.sign-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    background: rgba(255,255,255,0.08);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.sign-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.14);
+}
+.sign-item.selected {
+    border-color: #ffc800;
+    background: rgba(255, 200, 0, 0.18);
+}
+
+.sign-item img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.sign-item-label {
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.2;
+    color: #e8e8e8;
+}
+
+.signs-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn-primary {
+    background: #ffc800;
+    color: #0a1a2a;
+}
+.btn-primary:hover:not(:disabled) {
+    background: #ffd83a;
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+@media (max-width: 480px) {
+    .signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — Tabletă și telefon (galeria de pancarte)
+   ============================================================ */
+
+/* === TABLETĂ (până la 768px) === */
+@media (max-width: 768px) {
+    .signs-container {
+        max-width: 100%;
+        padding: 20px 18px;
+    }
+
+    .signs-container h2 {
+        font-size: 24px;
+    }
+
+    .signs-subtitle {
+        margin-bottom: 20px;
+    }
+}
+
+/* === TELEFON (până la 600px) === */
+@media (max-width: 600px) {
+    .signs-container {
+        padding: 18px 14px;
+    }
+
+    .signs-container h2 {
+        font-size: 22px;
+    }
+
+    .signs-subtitle {
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    /* 2 coloane pe telefon - pancartele se văd mai mari și mai clare */
+    .signs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .sign-item {
+        padding: 10px;
+    }
+
+    .sign-item-label {
+        font-size: 11px;
+    }
+
+    /* Butoanele de acțiune (Înapoi / Intră) ocupă lățimea egal */
+    .signs-actions {
+        gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        flex: 1;
+        padding: 14px 16px;
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+/* === TELEFON MIC (până la 400px) === */
+@media (max-width: 400px) {
+    .signs-container {
+        padding: 16px 12px;
+    }
+
+    .signs-grid {
+        gap: 8px;
+    }
+
+    .sign-item {
+        padding: 8px;
+        border-width: 2px;
+    }
+
+    .sign-item-label {
+        font-size: 10.5px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 13px 12px;
+        font-size: 14px;
+    }
+}
+
+/* === LANDSCAPE pe telefon (ecran lat dar scund) === */
+@media (max-height: 480px) and (orientation: landscape) {
+    #scene-signs {
+        align-items: flex-start;
+    }
+
+    .signs-container {
+        padding: 14px 18px;
+    }
+
+    .signs-container h2 {
+        font-size: 20px;
+    }
+
+    .signs-subtitle {
+        margin-bottom: 12px;
+    }
+
+    /* În landscape, 3 coloane merg bine (ecranul e lat) */
+    .signs-grid {
+        grid-template-columns: repeat(3, 1fr);
+        margin-bottom: 14px;
+    }
+}

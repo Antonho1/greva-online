@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calendar Greve - Greva Online</title>
+    <meta name="description" content="Grevele, pichetările și protestele angajaților din România — anunțate, în desfășurare și încheiate.">
+
+    <meta property="og:title" content="Calendar Greve - Greva Online">
+    <meta property="og:description" content="Grevele, pichetările și protestele angajaților din România.">
+    <meta property="og:image" content="https://greva.online/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://greva.online/calendar">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ro_RO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://greva.online/assets/og-image.jpg">
+
+    <link rel="stylesheet" href="/css/reset.css?v=64">
+    <link rel="stylesheet" href="/css/pages.css?v=64">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+</head>
+<body class="page">
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Calendar Greve</h1>
+            <a href="/" class="back-btn">← Înapoi</a>
+        </div>
+
+        <div class="card">
+            <p>Lista grevelor anunțate și active din România. Dacă pregătești sau participi la o grevă neînregistrată aici, <a href="/inscriere" style="color:#ffc800">înscrie-o</a>.</p>
+        </div>
+
+        <div id="calendar-filters" class="calendar-filters" hidden>
+            <label>
+                <span>Sector</span>
+                <select id="filter-sector">
+                    <option value="">Toate sectoarele</option>
+                </select>
+            </label>
+            <label>
+                <span>Oraș</span>
+                <select id="filter-oras">
+                    <option value="">Toate orașele</option>
+                </select>
+            </label>
+        </div>
+
+        <div id="greve-list">
+            <p style="text-align:center; opacity:0.6;">Se încarcă...</p>
+        </div>
+    </div>
+
+    <script src="/js/calendar.js?v=64"></script>
+</body>
+</html>
