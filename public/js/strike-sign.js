@@ -13,6 +13,9 @@
  * Performanță: imaginea e desenată o singură dată pe un <canvas> și e
  * aplicată tuturor rățuștelor printr-o singură regulă CSS, deci 5000 de
  * rățuște cu această pancartă nu costă nimic în plus.
+ *
+ * Imaginea e un URL data: (nu blob:), pentru că politica CSP a site-ului
+ * permite imagini doar din 'self' și data: (img-src 'self' data:).
  */
 
 (function () {
@@ -44,7 +47,6 @@
 
     let blankPromise = null;
     let currentKey = null;
-    let currentCssUrl = null; // imaginea folosită acum de regula CSS
     let currentUrl = null;    // pancarta acțiunii active (null = nicio acțiune)
     let currentLabel = null;  // ex: „Grevă la Metrorex”, pentru galerie
 
@@ -147,11 +149,7 @@
             ctx.fillText(line, cx, firstY + i * lineH);
         });
 
-        return new Promise((resolve, reject) => {
-            canvas.toBlob(blob => blob
-                ? resolve(URL.createObjectURL(blob))
-                : reject(new Error('canvas.toBlob a eșuat')));
-        });
+        return canvas.toDataURL('image/png');
     }
 
     /** Actualizează elementul din galeria de pancarte (dacă a fost creat). */
@@ -185,19 +183,12 @@
 
         // Fără acțiune activă, rățuștele rămase cu pancarta primesc „Grevă!”
         const url = key ? await render(label, name) : await render('Grevă!', '');
-        if (currentKey !== key) {
-            // A venit între timp o actualizare mai nouă
-            URL.revokeObjectURL(url);
-            return;
-        }
+        if (currentKey !== key) return; // a venit între timp o actualizare mai nouă
 
-        const previous = currentCssUrl;
-        currentCssUrl = url;
         setSignUrl(url);
         currentUrl = key ? url : null;
         currentLabel = key ? `${label} la ${name}` : null;
         refreshGallery();
-        if (previous && previous.startsWith('blob:')) URL.revokeObjectURL(previous);
     }
 
     window.addEventListener('greva:action', (e) => {
