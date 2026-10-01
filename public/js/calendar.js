@@ -264,6 +264,63 @@
         return 'https://calendar.google.com/calendar/render?' + params.toString();
     }
 
+    // === DATE STRUCTURATE (Google: schema.org/Event) ===
+
+    // Decalajul orei României la data respectivă: +02:00 iarna, +03:00 vara.
+    function bucharestOffset(dateStr) {
+        try {
+            const name = new Intl.DateTimeFormat('en-US', { timeZone: TIMEZONE, timeZoneName: 'longOffset' })
+                .formatToParts(new Date(dateStr + 'T12:00:00Z'))
+                .find(p => p.type === 'timeZoneName').value;
+            const m = name.match(/[+-]\d{2}:\d{2}/);
+            return m ? m[0] : '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function isoDateTime(date, time) {
+        if (!isTime(time)) return date;
+        return `${date}T${time}:00${bucharestOffset(date)}`;
+    }
+
+    function eventJsonLd(g) {
+        const endDate = isDate(g.data_end) ? g.data_end : g.data_start;
+        const address = { '@type': 'PostalAddress', addressCountry: 'RO' };
+        const oras = orasOf(g);
+        if (oras !== ORAS_NATIONAL && oras !== ORAS_NESPECIFICAT) address.addressLocality = oras;
+
+        const event = {
+            '@type': 'Event',
+            name: eventTitle(g),
+            description: g.motiv || eventTitle(g),
+            startDate: isoDateTime(g.data_start, g.ora_start),
+            endDate: isoDateTime(endDate, g.ora_end),
+            eventStatus: 'https://schema.org/EventScheduled',
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            location: { '@type': 'Place', name: g.locatie || oras, address },
+            image: SITE + '/assets/og-image.jpg',
+            url: cardUrl(g),
+        };
+        if (g.organizator) {
+            event.organizer = { '@type': 'Organization', name: g.organizator };
+            if (g.site) event.organizer.url = g.site;
+        }
+        return event;
+    }
+
+    function addStructuredData(list) {
+        list = list.filter(g => isDate(g.data_start));
+        if (list.length === 0) return;
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': list.map(eventJsonLd),
+        }).replace(/</g, '\\u003c');
+        document.head.appendChild(script);
+    }
+
     // === RANDARE ===
 
     function renderStatusBadge(status) {
@@ -451,6 +508,7 @@
             }
             greve = prepare(data.greve);
             render();
+            addStructuredData(greve);
             setupFilters();
             highlightFromHash();
         })
